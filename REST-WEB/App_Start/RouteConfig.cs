@@ -15,9 +15,17 @@ namespace REST_WEB
 
             routes.MapRoute(
                 name: "display",
-                url: "{display}/{ip}/{port}",
-                defaults: new { controller = "First", action = "display", id = UrlParameter.Optional }
+                url: "display/{ip}/{port}",
+                defaults: new { controller = "My", action = "display", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+    name: "Default",
+    url: "{controller}/{action}/{id}",
+    defaults: new { controller = "My", action = "Def", id = UrlParameter.Optional }
+);
         }
+
+
     }
 }

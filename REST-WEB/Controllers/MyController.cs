@@ -9,7 +9,7 @@ namespace REST_WEB.Controllers
     public class MyController : Controller
     {
             [HttpGet]
-            public ActionResult display(string nameFile, int time)
+            public ActionResult display(string ip, int port)
             {
                 ViewBag.lon = 50;
                 ViewBag.lat = 50;
@@ -22,5 +22,11 @@ namespace REST_WEB.Controllers
                 string ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
                 return View();
             }
+        public ActionResult Def()
+        {
+            return View();
         }
+
     }
+
+}
