@@ -34,7 +34,7 @@ namespace REST_WEB.Models
                 }
             }
         }
-
+        public int time { get; set; }
 
 
         private bool isConnected()

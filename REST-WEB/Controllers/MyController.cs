@@ -6,18 +6,20 @@ namespace REST_WEB.Controllers
     {
 
         [HttpGet]
-            public ActionResult display(string ip, int port)
+            public ActionResult display(string ip, int port,int time)
             {
                 ClientModel.Instance.Open(ip, port);
                 if (ClientModel.Instance.IsConnected())
                 {
                     ViewBag.lon = ClientModel.Instance.Lon;
                     ViewBag.lat = ClientModel.Instance.Lat;
+                ViewBag.time = ClientModel.Instance.time = time;
+               
 
+                Session["time"] = time; 
                     ClientModel.Instance.Close();
                 }
             return View();
-
             }
             // GET: save
             [HttpGet]

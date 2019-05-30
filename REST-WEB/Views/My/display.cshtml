@@ -6,25 +6,33 @@
 <!-- display -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="style" type="text/css" href="~/StyleSheet.css">
 </head>
 <body>
-    <canvas id="displayCanvas" style="background-size: 100% 100%"> </canvas>
+    <canvas id="displayCanvas" ></canvas>
+
+
 
     <script>
+
+      var IntervalTime = @Session["time"] * 1000;
         var lon = @ViewBag.lon;
         var lat = @ViewBag.lat;
-        var lonNormal = (lon + 180) * (window.innerWidth / 360);
-        var latNormal = (lat + 90) * (window.innerHeight / 180);
-        var canvas = document.getElementById("displayCanvas").getContext("2d");
-        canvas.beginPath();
-        //alert(window.innerWidth)
-       // alert(window.innerHeight)
-      //  alert(lonNormal);
-      //  alert(latNormal);
+        var canvas = document.getElementById("displayCanvas");
 
-        
-        canvas.arc(lon,lat, 10, 10, 20 * Math.PI);
-        canvas.stroke();
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.position = "absolute";
+
+        canvas = canvas.getContext('2d');
+      
+
+        var lonNormal = (lon + 180) * (window.innerWidth / 360);
+        var latNormal = (lat + 90) * (window.innerHeight /180);
+
+        canvas.beginPath();
+        canvas.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
+         canvas.stroke();
         canvas.fillStyle = "red";
         canvas.fill();
     </script>
