@@ -25,7 +25,5 @@ namespace REST_WEB
     defaults: new { controller = "My", action = "Def", id = UrlParameter.Optional }
 );
         }
-
-
     }
 }
