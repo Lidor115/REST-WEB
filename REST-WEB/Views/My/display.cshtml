@@ -1,21 +1,33 @@
-﻿
+﻿@{ 
+    ViewBag.Title = "display";
+}
+
 <!DOCTYPE html>
 <!-- display -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 </head>
 <body>
-    <canvas id="displayCanvas" width="600   " height="600" style="position:absolute"></canvas>
+    <canvas id="displayCanvas" style="background-size: 100% 100%"> </canvas>
+
     <script>
-        var lon = (@ViewBag.lon);
-        var lat = (@ViewBag.lat);
+        var lon = @ViewBag.lon;
+        var lat = @ViewBag.lat;
+        var lonNormal = (lon + 180) * (window.innerWidth / 360);
+        var latNormal = (lat + 90) * (window.innerHeight / 180);
         var canvas = document.getElementById("displayCanvas").getContext("2d");
         canvas.beginPath();
-        canvas.arc(lon, lat, 10, 0, 2 * Math.PI);
+        //alert(window.innerWidth)
+       // alert(window.innerHeight)
+      //  alert(lonNormal);
+      //  alert(latNormal);
+
+        
+        canvas.arc(lon,lat, 10, 10, 20 * Math.PI);
         canvas.stroke();
         canvas.fillStyle = "red";
         canvas.fill();
-
     </script>
+    </>
 </body>
 </html>
