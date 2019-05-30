@@ -6,29 +6,56 @@ namespace REST_WEB.Controllers
     {
 
         [HttpGet]
-            public ActionResult display(string ip, int port,int time)
+        public ActionResult displayWithTime(string ip, int port, int time)
+        {
+            ClientModel.Instance.Open(ip, port);
+            if (ClientModel.Instance.IsConnected())
             {
-                ClientModel.Instance.Open(ip, port);
-                if (ClientModel.Instance.IsConnected())
-                {
-                    ViewBag.lon = ClientModel.Instance.Lon;
-                    ViewBag.lat = ClientModel.Instance.Lat;
+                ViewBag.lon = ClientModel.Instance.Lon;
+                ViewBag.lat = ClientModel.Instance.Lat;
                 ViewBag.time = ClientModel.Instance.time = time;
-               
 
-                Session["time"] = time; 
-                    ClientModel.Instance.Close();
-                }
+
+                Session["time"] = time;
+                ClientModel.Instance.Close();
+            }
             return View();
-            }
-            // GET: save
-            [HttpGet]
-            public ActionResult save(string ip1, string ip2, string ip3, string ip4, int port, int time, int duration, string nameFile)
+        }
+
+        [HttpGet]
+        public ActionResult display(string ip, int port)
+        {
+            ClientModel.Instance.Open(ip, port);
+            if (ClientModel.Instance.IsConnected())
             {
-            // Todo - change all this function
-                string ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
-                return View();
+                ViewBag.lon = ClientModel.Instance.Lon;
+                ViewBag.lat = ClientModel.Instance.Lat;
+
+                ClientModel.Instance.Close();
             }
+            return View();
+        }
+
+        // GET: save
+        [HttpGet]
+        public ActionResult save(string ip, int port, int second, int time, string name)
+        {
+            ClientModel.Instance.Open(ip, port);
+            ClientModel.Instance.SaveToFile(name);
+
+            Session["time"] = time;
+            Session["second"] = second;
+            return View();
+        }
+
+        public ActionResult DisplayFile(string name, int time)
+        {
+            Session["time"] = time;
+            // read file
+            ClientModel.Instance.ReadFile(name);
+            return View();
+
+        }
         public ActionResult Def()
         {
             return View();

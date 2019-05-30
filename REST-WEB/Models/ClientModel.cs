@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -14,7 +15,7 @@ namespace REST_WEB.Models
         private BinaryWriter binaryWriter;
         private BinaryReader binaryReader;
         private bool connected = false;
-
+        List<List<float>> myList;
         private ClientModel() { }
 
         /**
@@ -42,11 +43,38 @@ namespace REST_WEB.Models
             return this.connected;
         }
 
+        //Save route to file
+        public void SaveToFile(string name)
+        {
+            string fileName = name + ".txt";
+            StreamWriter writer = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
+            writer.Close();
+        }
 
+        //Read file
+        public void ReadFile(string name)
+        {
+            string fileName = name + ".txt";
+            string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
+            List<List<float>> temp = new List<List<float>>();
+            for (int i = 0; i < lines.Length; i++)
+                temp.Add(Split(lines[i]));
+            myList = temp;
+        }
 
-        /**
-         * Open a new Tcp Client connection to the server.
-         * */
+        private List<float> Split(string str)
+        {
+            List<float> list = new List<float>();
+            String[] data = str.Split(' ');
+            list.Add(float.Parse(data[0]));
+            list.Add(float.Parse(data[1]));
+
+            return list;
+        }
+
+        /*
+        * Open a new Tcp Client connection to the server.
+        */
         public void Open(string ip, int port)
         {
             if (connected) return;
