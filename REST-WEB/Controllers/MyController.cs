@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
-using REST_WEB.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
 namespace REST_WEB.Controllers
 {
     public class MyController : Controller
@@ -8,16 +12,11 @@ namespace REST_WEB.Controllers
         [HttpGet]
             public ActionResult display(string ip, int port)
             {
-                ClientModel.Instance.Open(ip, port);
-                if (ClientModel.Instance.IsConnected())
-                {
-                    ViewBag.lon = ClientModel.Instance.Lon;
-                    ViewBag.lat = ClientModel.Instance.Lat;
-
-                    ClientModel.Instance.Close();
-                }
-            return View();
-
+            // connect to the server
+            
+                ViewBag.lon = 50; /// change to take to lon
+                ViewBag.lat = 50; // change to take the lat
+                return View();
             }
             // GET: save
             [HttpGet]
