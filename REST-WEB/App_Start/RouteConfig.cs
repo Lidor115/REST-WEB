@@ -14,25 +14,21 @@ namespace REST_WEB
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "displayWithTime",
-                url: "display/{ip}/{port}/{time}",
-                defaults: new { controller = "My", action = "displayWithTime", time = 0 }
-            );
-
-            routes.MapRoute(
                 name: "display",
                 url: "display/{ip}/{port}",
                 defaults: new { controller = "My", action = "display" }
             );
 
             routes.MapRoute(
+                name: "displayWithTime",
+                url: "display/{ip}/{port}/{time}",
+                defaults: new { controller = "My", action = "displayWithTime", time = 0 }
+            );
+
+            routes.MapRoute(
                 name: "save",
                 url: "save/{ip}/{port}/{second}/{time}/{name}",
-                defaults: new
-                {
-                    controller = "My",
-                    action = "save",
-                }
+                defaults: new { controller = "My", action = "save"}
             );
 
             routes.MapRoute(
