@@ -12,17 +12,17 @@ namespace REST_WEB
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            /*
             routes.MapRoute(
                 name: "display",
                 url: "display/{ip}/{port}",
                 defaults: new { controller = "My", action = "display" }
-            );
+            );*/
 
             routes.MapRoute(
-                name: "displayWithTime",
+                name: "display",
                 url: "display/{ip}/{port}/{time}",
-                defaults: new { controller = "My", action = "displayWithTime", time = 0 }
+                defaults: new { controller = "My", action = "display", time = 0 }
             );
 
             routes.MapRoute(

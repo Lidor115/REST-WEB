@@ -3,7 +3,6 @@
 }
 
 <!DOCTYPE html>
-<!-- display -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="style" type="text/css" href="~/StyleSheet.css">
@@ -14,25 +13,74 @@
 
 
     <script>
-
-      var IntervalTime = @Session["time"] * 1000;
-        var lon = @ViewBag.lon;
-        var lat = @ViewBag.lat;
         var canvas = document.getElementById("displayCanvas");
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         canvas.style.position = "absolute";
-
         canvas = canvas.getContext('2d');
-      
+        var prevLon = null; 
+        var prevLat = null; 
+        var t = @Session["time"];
+        var IntervalTime = t * 1000;
+        drawTimer(IntervalTime);
 
-        var lonNormal = (lon + 180) * (window.innerWidth / 360);
-        var latNormal = (lat + 90) * (window.innerHeight /180);
+        // function of the timer
 
+        function drawTimer(IntervalTime) {
+            myTimer = (function () {
+                $.post("@Url.Action("GetLonLat")").done(function (xml) {
+                    var xmlDoc = $.parseXML(xml),
+                        $xml = $(xmlDoc),
+                        lon = $xml.find("Lon").text();
+                    lat = $xml.find("Lat").text();
+                    var lonNormal = (lon + 180) * (window.innerWidth / 360);
+                    var latNormal = (lat + 90) * (window.innerHeight / 180);
+                    if (prevLat == null || prevLon == null) {
+                        drawPoint(lon, lat);
+                    } else {
+                        drawLine(prevLon, prevLat, lon, lat);
+                    }
+                        prevLon = lon;
+                        prevLat = lat; 
+
+                });
+            });
+            if (t != 0) {
+                setInterval(myTimer, IntervalTime);
+            }
+        }
+            
+    drawPoint = (function (lon,  lat) {
         canvas.beginPath();
         canvas.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
-         canvas.stroke();
+        canvas.stroke();
+        canvas.fillStyle = "red";
+        canvas.fill();
+    });
+
+
+    drawLine = (function (prevLon, prevLat, lon,  lat) {
+            canvas.beginPath();
+            canvas.moveTo(prevLon, prevLat);
+            canvas.lineTo(lon, lat);
+            canvas.stroke();
+            canvas.fillStyle = "red";
+            canvas.fill();
+    });
+
+
+        var lon = @ViewBag.lon;
+        var lat = @ViewBag.lat;
+        var canvas = document.getElementById("displayCanvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.position = "absolute";
+        canvas = canvas.getContext('2d');
+        var lonNormal = (lon + 180) * (window.innerWidth / 360);
+        var latNormal = (lat + 90) * (window.innerHeight / 180);
+        canvas.beginPath();
+        canvas.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
+        canvas.stroke();
         canvas.fillStyle = "red";
         canvas.fill();
     </script>
