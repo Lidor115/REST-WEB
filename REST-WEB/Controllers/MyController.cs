@@ -1,10 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Text;
+using System.Web.Mvc;
+using System.Xml;
 using REST_WEB.Models;
 namespace REST_WEB.Controllers
 {
     public class MyController : Controller
     {
-
         [HttpGet]
         public ActionResult displayWithTime(string ip, int port, int time)
         {
@@ -51,7 +53,6 @@ namespace REST_WEB.Controllers
         public ActionResult DisplayFile(string name, int time)
         {
             Session["time"] = time;
-            // read file
             ClientModel.Instance.ReadFile(name);
             return View();
 
@@ -59,6 +60,26 @@ namespace REST_WEB.Controllers
         public ActionResult Def()
         {
             return View();
+        }
+
+        [HttpPost]
+        public string SaveToXML()
+        {
+            List<float> point = new List<float>();
+
+            var lon = ClientModel.Instance.Lon;
+            var lat = ClientModel.Instance.Lat;
+            StringBuilder builder = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriter writer = XmlWriter.Create(builder, settings);
+
+            writer.WriteStartDocument();
+            writer.WriteStartElement("Location");
+            //TODO: Save all parameters
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            return builder.ToString();
         }
 
     }
