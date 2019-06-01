@@ -7,35 +7,15 @@ namespace REST_WEB.Controllers
 {
     public class MyController : Controller
     {
-        /*
-        [HttpGet]
-        public ActionResult displayWithTime(string ip, int port, int time)
-        {
-            ClientModel.Instance.Open(ip, port);
-            if (ClientModel.Instance.IsConnected())
-            {
-                ViewBag.lon = ClientModel.Instance.Lon;
-                ViewBag.lat = ClientModel.Instance.Lat;
-                ViewBag.time = ClientModel.Instance.time = time;
+        private ClientModel ClientModel = ClientModel.Instance;
 
-
-                Session["time"] = time;
-                ClientModel.Instance.Close();
-            }
-            return View();
-        }
-        */
         [HttpGet]
         public ActionResult display(string ip, int port, int time)
         {
-            ClientModel.Instance.Open(ip, port);
-            if (ClientModel.Instance.IsConnected())
+            ClientModel.Open(ip, port);
+            if (ClientModel.IsConnected())
             {
-                ClientModel.Instance.time = time;
-                ViewBag.lon = ClientModel.Instance.Lon;
-                ViewBag.lat = ClientModel.Instance.Lat;
-                Session["time"] = time;
-                ClientModel.Instance.Close();
+                ViewBag.time = time;
             }
             return View();
         }
@@ -44,8 +24,8 @@ namespace REST_WEB.Controllers
         [HttpGet]
         public ActionResult save(string ip, int port, int second, int time, string name)
         {
-            ClientModel.Instance.Open(ip, port);
-            ClientModel.Instance.SaveToFile(name);
+            ClientModel.Open(ip, port);
+            ClientModel.SaveToFile(name);
 
             Session["time"] = time;
             Session["second"] = second;
@@ -55,7 +35,7 @@ namespace REST_WEB.Controllers
         public ActionResult DisplayFile(string name, int time)
         {
             Session["time"] = time;
-            ClientModel.Instance.ReadFile(name);
+            ClientModel.ReadFile(name);
             return View();
 
         }
@@ -68,12 +48,13 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string GetLonLat()
         {
-            var client = ClientModel.Instance;
-
-
-            return ToXml(client.Lon, client.Lat);
+            string lon = ClientModel.Lon.ToString();
+            string lat = ClientModel.Lat.ToString();
+            ClientModel.point.Lon = lon;
+            ClientModel.point.Lat = lat;
+            return ToXml(ClientModel.point);
         }
-        private string ToXml(double lon , double lat)
+        public string ToXml(Point point)
         {
             //Initiate XML stuff
             StringBuilder sb = new StringBuilder();
@@ -82,10 +63,9 @@ namespace REST_WEB.Controllers
 
             writer.WriteStartDocument();
             writer.WriteStartElement("Point");
-
-            writer.WriteElementString("lon", lon.ToString());
-            writer.WriteElementString("lat", lat.ToString());
-
+            point.ToXml(writer);
+            writer.WriteElementString("Lon", point.Lon);
+            writer.WriteElementString("Lat", point.Lat);
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
@@ -114,5 +94,4 @@ namespace REST_WEB.Controllers
         }
 
     }
-
 }

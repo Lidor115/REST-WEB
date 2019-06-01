@@ -13,76 +13,66 @@
 
 
     <script>
-        var canvas = document.getElementById("displayCanvas");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.position = "absolute";
-        canvas = canvas.getContext('2d');
-        var prevLon = null; 
-        var prevLat = null; 
-        var t = @Session["time"];
-        var IntervalTime = t * 1000;
-        drawTimer(IntervalTime);
+
 
         // function of the timer
+    var canvas = document.getElementById("displayCanvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.position = "absolute";
+    canvas = canvas.getContext("2d");
+    var prevLon = null; 
+    var prevLat = null;
 
-        function drawTimer(IntervalTime) {
+    function drawPoint (lon, lat) {
+        canvas.beginPath();
+        canvas.arc(lon, lat, 10, 0, 2 * Math.PI);
+        canvas.stroke();
+        canvas.fillStyle = "red";
+        canvas.fill();
+    }
+
+
+    function drawLine (prevLon, prevLat, lon,  lat) {
+        canvas.beginPath();
+        canvas.moveTo(prevLon, prevLat);
+        canvas.lineTo(lon, lat);
+        canvas.stroke();
+        canvas.fillStyle = "red";
+        canvas.fill();
+    }
+
+
+        function drawTimer() {
+            var t = @ViewBag.time; 
+            var IntervalTime = t * 1000;
+            alert(IntervalTime)
             myTimer = (function () {
                 $.post("@Url.Action("GetLonLat")").done(function (xml) {
-                    var xmlDoc = $.parseXML(xml),
-                        $xml = $(xmlDoc),
-                        lon = $xml.find("Lon").text();
+                    var xmlDoc = $.parseXML(xml);
+                    $xml = $(xmlDoc);
+                    lon = $xml.find("Lon").text();
                     lat = $xml.find("Lat").text();
-                    var lonNormal = (lon + 180) * (window.innerWidth / 360);
-                    var latNormal = (lat + 90) * (window.innerHeight / 180);
+                    var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
+                    var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
                     if (prevLat == null || prevLon == null) {
-                        drawPoint(lon, lat);
+                        drawPoint(lonNormal, latNormal);
                     } else {
-                        drawLine(prevLon, prevLat, lon, lat);
+                        drawLine(prevLon, prevLat, lonNormal, latNormal);
                     }
-                        prevLon = lon;
-                        prevLat = lat; 
-
+                        prevLon = lonNormal;
+                        prevLat = latNormal; 
                 });
             });
-            if (t != 0) {
+            if (IntervalTime != 0) {
                 setInterval(myTimer, IntervalTime);
             }
+            myTimer();
         }
-            
-    drawPoint = (function (lon,  lat) {
-        canvas.beginPath();
-        canvas.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
-        canvas.stroke();
-        canvas.fillStyle = "red";
-        canvas.fill();
-    });
+
+        drawTimer();
 
 
-    drawLine = (function (prevLon, prevLat, lon,  lat) {
-            canvas.beginPath();
-            canvas.moveTo(prevLon, prevLat);
-            canvas.lineTo(lon, lat);
-            canvas.stroke();
-            canvas.fillStyle = "red";
-            canvas.fill();
-    });
-
-
-        var lon = @ViewBag.lon;
-        var lat = @ViewBag.lat;
-        var canvas = document.getElementById("displayCanvas");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.position = "absolute";
-        canvas = canvas.getContext('2d');
-        var lonNormal = (lon + 180) * (window.innerWidth / 360);
-        var latNormal = (lat + 90) * (window.innerHeight / 180);
-        canvas.beginPath();
-        canvas.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
-        canvas.stroke();
-        canvas.fillStyle = "red";
-        canvas.fill();
     </script>
     </>
 </body>

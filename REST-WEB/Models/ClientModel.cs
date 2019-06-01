@@ -8,6 +8,7 @@ namespace REST_WEB.Models
 {
     public class ClientModel
     {
+        public Point point { get; private set; }
         private readonly static object locker = new object();
         private NetworkStream stream = null;
         private TcpClient client;
@@ -16,7 +17,9 @@ namespace REST_WEB.Models
         private BinaryReader binaryReader;
         private bool connected = false;
         List<List<float>> myList;
-        private ClientModel() { }
+        public ClientModel() {
+            point = new Point();
+        }
 
         /**
          * The Instance static property for the Singleton getter.
@@ -101,6 +104,7 @@ namespace REST_WEB.Models
          * */
         private double GetInfo(string toSend)
         {
+            lock (locker) { 
             // convert the command string to an array of bytes.
             binaryWriter.Write(Encoding.ASCII.GetBytes(toSend));
             char c;
@@ -112,6 +116,7 @@ namespace REST_WEB.Models
             stream.Flush();
             return Parser(input);
         }
+            }
 
         // TODO - check if there is problem here when we read 4hz
         private double Parser(string toParse)
@@ -143,6 +148,7 @@ namespace REST_WEB.Models
         {
             return this.client != null;
         }
+
 
     }
 }
