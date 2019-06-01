@@ -52,6 +52,16 @@ namespace REST_WEB.Controllers
             string lat = ClientModel.Lat.ToString();
             ClientModel.point.Lon = lon;
             ClientModel.point.Lat = lat;
+            /*
+            double lonD = double.Parse(ClientModel.point.Lon);
+            lonD += 100;
+            ClientModel.point.Lon = lonD.ToString();
+            ClientModel.Lon = lonD;
+            double latD = double.Parse(ClientModel.point.Lat);
+            latD -= 100;
+            ClientModel.Lat = latD;
+            ClientModel.point.Lat = latD.ToString();
+*/
             return ToXml(ClientModel.point);
         }
         public string ToXml(Point point)
@@ -69,6 +79,16 @@ namespace REST_WEB.Controllers
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
+            /*
+            double lonD = double.Parse(ClientModel.point.Lon);
+            lonD += 100;
+            ClientModel.point.Lon = lonD.ToString();
+            ClientModel.Lon = lonD; 
+            double latD = double.Parse(ClientModel.point.Lat);
+            latD -= 100;
+            ClientModel.Lat = latD;
+            ClientModel.point.Lat = latD.ToString();
+            */
             return sb.ToString();
         }
 

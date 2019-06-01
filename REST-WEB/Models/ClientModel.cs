@@ -129,16 +129,25 @@ namespace REST_WEB.Models
         {
             get
             {
-                return GetInfo("get /position/longitude-deg\r\n");
+                double l = GetInfo("get /position/longitude-deg\r\n");
+                this.point.Lat = l.ToString();
+                return l;
             }
+            set {; }
         }
 
         public double Lat
         {
             get
             {
-                return GetInfo("get /position/latitude-deg\r\n");
+                double l = GetInfo("get /position/latitude-deg\r\n");
+                this.point.Lat = l.ToString();
+                return l;
+
+
             }
+            set {; }
+
         }
 
         /**

@@ -33,13 +33,13 @@
     }
 
 
-    function drawLine (prevLon, prevLat, lon,  lat) {
+    function drawLine (lon,  lat) {
         canvas.beginPath();
         canvas.moveTo(prevLon, prevLat);
         canvas.lineTo(lon, lat);
-        canvas.stroke();
         canvas.fillStyle = "red";
-        canvas.fill();
+        canvas.stroke();
+
     }
 
 
@@ -58,7 +58,7 @@
                     if (prevLat == null || prevLon == null) {
                         drawPoint(lonNormal, latNormal);
                     } else {
-                        drawLine(prevLon, prevLat, lonNormal, latNormal);
+                        drawLine(lonNormal, latNormal);
                     }
                         prevLon = lonNormal;
                         prevLat = latNormal; 
