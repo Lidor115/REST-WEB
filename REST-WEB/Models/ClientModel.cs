@@ -17,6 +17,7 @@ namespace REST_WEB.Models
         private BinaryReader binaryReader;
         private bool connected = false;
         List<List<float>> myList;
+            private string name; 
         public ClientModel() {
             point = new Point();
         }
@@ -47,10 +48,12 @@ namespace REST_WEB.Models
         }
 
         //Save route to file
-        public void SaveToFile(string name)
+        public void SaveToFile(string data)
         {
-            string fileName = name + ".txt";
+            string fileName = this.name + ".txt";
             StreamWriter writer = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
+            writer.WriteLine(data);
+           
             writer.Close();
         }
 
@@ -88,6 +91,18 @@ namespace REST_WEB.Models
             binaryReader = new BinaryReader(this.stream);
             binaryWriter = new BinaryWriter(this.stream);
 
+        }
+
+        public string Name
+        {
+            set
+            {
+                this.name = value;
+            }
+            get
+            {
+                return this.name;
+            }
         }
 
         /**
@@ -149,6 +164,7 @@ namespace REST_WEB.Models
             set {; }
 
         }
+
 
         /**
          * Is the connection open

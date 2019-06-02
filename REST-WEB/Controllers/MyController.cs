@@ -8,7 +8,6 @@ namespace REST_WEB.Controllers
     public class MyController : Controller
     {
         private ClientModel ClientModel = ClientModel.Instance;
-
         [HttpGet]
         public ActionResult display(string ip, int port, int time)
         {
@@ -25,10 +24,9 @@ namespace REST_WEB.Controllers
         public ActionResult save(string ip, int port, int second, int time, string name)
         {
             ClientModel.Open(ip, port);
-            ClientModel.SaveToFile(name);
-
-            Session["time"] = time;
-            Session["second"] = second;
+            ClientModel.Name = name; 
+            Session["time"] = second;
+            Session["timoutSave"] = time;
             return View();
         }
 
@@ -96,16 +94,20 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string SaveToXML()
         {
-            List<float> point = new List<float>();
-
             var lon = ClientModel.Instance.Lon;
             var lat = ClientModel.Instance.Lat;
+            Point p = new Point();
+            p.Lat = lat.ToString();
+            p.Lon = lon.ToString();
             StringBuilder builder = new StringBuilder();
             XmlWriterSettings settings = new XmlWriterSettings();
             XmlWriter writer = XmlWriter.Create(builder, settings);
 
             writer.WriteStartDocument();
             writer.WriteStartElement("Location");
+            p.ToXml(writer);
+            string data = p.Lon + "," + p.Lat; 
+            ClientModel.Instance.SaveToFile(data);
             //TODO: Save all parameters
             writer.WriteEndElement();
             writer.WriteEndDocument();
