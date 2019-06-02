@@ -100,22 +100,18 @@ namespace REST_WEB.Controllers
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".txt";
             if (!System.IO.File.Exists(filename))
             {
-                var lon = ClientModel.Instance.Lon;
+/*                var lon = ClientModel.Instance.Lon;
                 var lat = ClientModel.Instance.Lat;
                 Point p = new Point();
                 p.Lat = lat.ToString();
-                p.Lon = lon.ToString();
+                p.Lon = lon.ToString();*/
                 XmlWriterSettings settings = new XmlWriterSettings();
                 XmlWriter writer = XmlWriter.Create(filename, settings);
-                writer.WriteStartDocument();
-                writer.WriteStartElement("Location");
-                writer.WriteAttributeString("Count", "1");
-                writer.WriteStartElement("Lon");
-                writer.WriteString(p.Lon.ToString());
-                writer.WriteEndElement();
-                writer.WriteStartElement("Lat");
-                writer.WriteString(p.Lat.ToString());
-                writer.WriteEndDocument();
+                XElement xmlTree = new XElement("Location",
+                    new XElement("Lon", ClientModel.Instance.Lon),
+                    new XElement("Lat", ClientModel.Instance.Lat)
+                );
+                xmlTree.WriteTo(writer);
                 writer.Flush();
                 writer.Close();
                 return writer.ToString(); ;
