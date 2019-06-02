@@ -51,7 +51,7 @@ namespace REST_WEB.Models
         public void SaveToFile(string data)
         {
             string fileName = this.name + ".txt";
-            StreamWriter writer = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
+            StreamWriter writer = File.AppendText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             writer.WriteLine(data);
            
             writer.Close();

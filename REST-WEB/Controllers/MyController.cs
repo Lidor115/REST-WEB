@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Linq;
 using REST_WEB.Models;
 namespace REST_WEB.Controllers
 {
@@ -94,25 +96,45 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string SaveToXML()
         {
-            var lon = ClientModel.Instance.Lon;
-            var lat = ClientModel.Instance.Lat;
-            Point p = new Point();
-            p.Lat = lat.ToString();
-            p.Lon = lon.ToString();
-            StringBuilder builder = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            XmlWriter writer = XmlWriter.Create(builder, settings);
+            if (!System.IO.File.Exists(ClientModel.Name))
+            {
+                var lon = ClientModel.Instance.Lon;
+                var lat = ClientModel.Instance.Lat;
+                Point p = new Point();
+                p.Lat = lat.ToString();
+                p.Lon = lon.ToString();
+                XmlWriterSettings settings = new XmlWriterSettings();
+                XmlWriter writer = XmlWriter.Create("test.xml", settings);
+                writer.WriteStartDocument();
+                writer.WriteStartElement("Location");
+                writer.WriteAttributeString("Count", "1");
+                writer.WriteStartElement("Lon");
+                writer.WriteString(p.Lon.ToString());
+                writer.WriteEndElement();
+                writer.WriteStartElement("Lat");
+                writer.WriteString(p.Lat.ToString());
+                writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
+                return writer.ToString(); ;
+            }
+            else
+            {
+                XDocument xDocument = XDocument.Load(ClientModel.Name);
+                XElement root = xDocument.Element("Location");
 
-            writer.WriteStartDocument();
-            writer.WriteStartElement("Location");
-            p.ToXml(writer);
-            string data = p.Lon + "," + p.Lat; 
-            ClientModel.Instance.SaveToFile(data);
-            //TODO: Save all parameters
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            return builder.ToString();
+                IEnumerable<XElement> rows = root.Descendants("Location");
+                XElement firstRow = rows.Last();
+                firstRow.AddAfterSelf(
+                   new XElement("Lon", ClientModel.Instance.Lon),
+                   new XElement("Lat", ClientModel.Instance.Lat));
+                xDocument.Save(ClientModel.Name);
+                return xDocument.ToString();
+            }
+            //writer = p.ToXml(writer);
+            //string data = p.Lon + "," + p.Lat; 
+            //ClientModel.Instance.SaveToFile(data);
+            //return writer.ToString();
         }
 
     }

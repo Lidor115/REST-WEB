@@ -50,46 +50,45 @@
     }
 
 
-        function drawTimer() {
-                               var lon = -157;
-                    var lat = 21;
+    function drawTimer() {
+        var lon = -157;
+        var lat = 21;
 
-            var t =@Session["time"];
-            var IntervalTime = t * 1000;
-            alert(IntervalTime);
-            myTimer = (function () {
-                $.post("@Url.Action("SaveToXML")").done(function (xml) {
-                    var xmlDoc = $.parseXML(xml);
-                    $xml = $(xmlDoc);
-                   // lon = $xml.find("Lon").text();
-                   // lat = $xml.find("Lat").text();
-                    lon = lon + 50;
-                    lat = lat - 50;
-                    var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
-                    var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
-                     //       alert(" Lon Normal: " + lonNormal);
-                          //   alert(" Lat Normal: " + latNormal);
+        var t =@Session["time"];
+        var IntervalTime = t * 1000;
+        alert(IntervalTime);
+        myTimer = (function () {
+            $.post("@Url.Action("SaveToXML")").done(function (xml) {
+                var xmlDoc = $.parseXML(xml);
+                $xml = $(xmlDoc);
+                //lon = $xml.find("Lon").text();
+                //lat = $xml.find("Lat").text();
+                lon = lon + 50;
+                lat = lat - 50;
+                var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
+                var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
+                alert(" Lon Normal: " + lonNormal + " Lat Normal: " + latNormal);
 
-                    if (prevLat == null || prevLon == null) {
-                        drawPoint(lonNormal, latNormal);
-                        prevLon = lonNormal;
-                        prevLat = latNormal;
+                if (prevLat == null || prevLon == null) {
+                    drawPoint(lonNormal, latNormal);
+                    prevLon = lonNormal;
+                    prevLat = latNormal;
 
-                    } else {
-                        drawLine(prevLon, prevLat, lonNormal, latNormal);
-                        prevLon = lonNormal;
-                        prevLat = latNormal;
+                } else {
+                    drawLine(prevLon, prevLat, lonNormal, latNormal);
+                    prevLon = lonNormal;
+                    prevLat = latNormal;
 
-                    }
-                });
-
+                }
             });
-                var inter = setInterval(myTimer, IntervalTime);
-            timoutVar = setTimeout(function () { clearInterval(inter) }, @Session["timoutSave"]* 1000 );
-                myTimer();
-        }
 
-        drawTimer();
+        });
+        var inter = setInterval(myTimer, IntervalTime);
+        timoutVar = setTimeout(function () { clearInterval(inter) }, @Session["timoutSave"]* 1000 );
+        myTimer();
+    }
+
+    drawTimer();
 
 
     </script>
