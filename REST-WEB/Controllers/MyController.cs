@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -96,7 +97,8 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string SaveToXML()
         {
-            if (!System.IO.File.Exists(ClientModel.Name))
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".txt";
+            if (!System.IO.File.Exists(filename))
             {
                 var lon = ClientModel.Instance.Lon;
                 var lat = ClientModel.Instance.Lat;
@@ -104,7 +106,7 @@ namespace REST_WEB.Controllers
                 p.Lat = lat.ToString();
                 p.Lon = lon.ToString();
                 XmlWriterSettings settings = new XmlWriterSettings();
-                XmlWriter writer = XmlWriter.Create("test.xml", settings);
+                XmlWriter writer = XmlWriter.Create(filename, settings);
                 writer.WriteStartDocument();
                 writer.WriteStartElement("Location");
                 writer.WriteAttributeString("Count", "1");
@@ -120,7 +122,7 @@ namespace REST_WEB.Controllers
             }
             else
             {
-                XDocument xDocument = XDocument.Load(ClientModel.Name);
+                XDocument xDocument = XDocument.Load(filename);
                 XElement root = xDocument.Element("Location");
 
                 IEnumerable<XElement> rows = root.Descendants("Location");
@@ -128,7 +130,7 @@ namespace REST_WEB.Controllers
                 firstRow.AddAfterSelf(
                    new XElement("Lon", ClientModel.Instance.Lon),
                    new XElement("Lat", ClientModel.Instance.Lat));
-                xDocument.Save(ClientModel.Name);
+                xDocument.Save(filename);
                 return xDocument.ToString();
             }
             //writer = p.ToXml(writer);
