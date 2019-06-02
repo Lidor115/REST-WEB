@@ -123,9 +123,9 @@ namespace REST_WEB.Controllers
                 XDocument xDocument = XDocument.Load(ClientModel.Name);
                 XElement root = xDocument.Element("Location");
 
-                IEnumerable<XElement> rows = root.Descendants("Location");
-                XElement firstRow = rows.Last();
-                firstRow.AddAfterSelf(
+                IEnumerable<XElement> rows = root.Descendants();
+                XElement lastRow = rows.Last();
+                root.AddAfterSelf(
                    new XElement("Lon", ClientModel.Instance.Lon),
                    new XElement("Lat", ClientModel.Instance.Lat));
                 xDocument.Save(ClientModel.Name);
