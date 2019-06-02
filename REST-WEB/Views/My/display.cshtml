@@ -17,52 +17,71 @@
 
         // function of the timer
     var canvas = document.getElementById("displayCanvas");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.position = "absolute";
-    canvas = canvas.getContext("2d");
+   canvas.style.position = "absolute";
+        var ctx = canvas.getContext("2d");
+        ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+ 
     var prevLon = null; 
     var prevLat = null;
+    var lon = null; 
+    var lat = null; 
 
-    function drawPoint (lon, lat) {
-        canvas.beginPath();
-        canvas.arc(lon, lat, 10, 0, 2 * Math.PI);
-        canvas.stroke();
-        canvas.fillStyle = "red";
-        canvas.fill();
+    function drawPoint (lonNormal, latNormal) {
+        ctx.beginPath();
+        ctx.arc(lonNormal, latNormal, 10, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fillStyle = "#FF0000";
+        ctx.fill();
+
     }
 
 
-    function drawLine (lon,  lat) {
-        canvas.beginPath();
-        canvas.moveTo(prevLon, prevLat);
-        canvas.lineTo(lon, lat);
-        canvas.fillStyle = "red";
-        canvas.stroke();
-
+    function drawLine (prevLon, prevLat, lonNormal,  latNormal) {
+        ctx.beginPath();
+        ctx.fillStyle = "#FF0000";
+        ctx.moveTo(prevLon, prevLat);
+        ctx.lineTo(lonNormal, latNormal);
+        ctx.strokeStyle = "#FF0000";
+        ctx.stroke();
+        //alert("prev Lon1: " + prevLon + " Lon: " + lonNormal);
+       // alert("prev Lat1: " + prevLat + " Lat: " + latNormal);
     }
 
 
         function drawTimer() {
-            var t = @ViewBag.time; 
+                      //         var lon = -157;
+                    //var lat = 21; 
+
+            var t =@Session["time"]; 
             var IntervalTime = t * 1000;
-            alert(IntervalTime)
+            alert(IntervalTime);
             myTimer = (function () {
                 $.post("@Url.Action("GetLonLat")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml);
                     $xml = $(xmlDoc);
                     lon = $xml.find("Lon").text();
                     lat = $xml.find("Lat").text();
+                    //lon = lon + 50;
+                    //lat = lat - 50;
                     var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                     var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
+                     //       alert(" Lon Normal: " + lonNormal);
+                          //   alert(" Lat Normal: " + latNormal);
+
                     if (prevLat == null || prevLon == null) {
                         drawPoint(lonNormal, latNormal);
-                    } else {
-                        drawLine(lonNormal, latNormal);
-                    }
                         prevLon = lonNormal;
                         prevLat = latNormal; 
+
+                    } else {
+                        drawLine(prevLon, prevLat, lonNormal, latNormal);
+                        prevLon = lonNormal;
+                        prevLat = latNormal;
+
+                    }
                 });
+
             });
             if (IntervalTime != 0) {
                 setInterval(myTimer, IntervalTime);

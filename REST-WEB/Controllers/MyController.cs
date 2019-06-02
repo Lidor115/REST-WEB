@@ -15,7 +15,7 @@ namespace REST_WEB.Controllers
             ClientModel.Open(ip, port);
             if (ClientModel.IsConnected())
             {
-                ViewBag.time = time;
+                Session["time"] = time; 
             }
             return View();
         }
