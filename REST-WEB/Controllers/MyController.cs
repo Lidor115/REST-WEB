@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using System.Xml;
-using System.Xml.Linq;
 using REST_WEB.Models;
 namespace REST_WEB.Controllers
 {
@@ -33,11 +31,12 @@ namespace REST_WEB.Controllers
             return View();
         }
 
-        public ActionResult DisplayFile(string name, int time)
+        [HttpPost]
+        public string DisplayFile(string name, int interval)
         {
-            Session["time"] = time;
-            ClientModel.ReadFile(name);
-            return View();
+            Session["interval"] = interval;
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + name + ".xml";
+            return DBHandler.Instance.ReadData(filename);
 
         }
         public ActionResult Def()
@@ -45,7 +44,7 @@ namespace REST_WEB.Controllers
             return View();
         }
 
-
+        /*
         [HttpPost]
         public string GetLonLat()
         {
@@ -53,16 +52,6 @@ namespace REST_WEB.Controllers
             string lat = ClientModel.Lat.ToString();
             ClientModel.point.Lon = lon;
             ClientModel.point.Lat = lat;
-            /*
-            double lonD = double.Parse(ClientModel.point.Lon);
-            lonD += 100;
-            ClientModel.point.Lon = lonD.ToString();
-            ClientModel.Lon = lonD;
-            double latD = double.Parse(ClientModel.point.Lat);
-            latD -= 100;
-            ClientModel.Lat = latD;
-            ClientModel.point.Lat = latD.ToString();
-*/
             return ToXml(ClientModel.point);
         }
         public string ToXml(Point point)
@@ -89,50 +78,16 @@ namespace REST_WEB.Controllers
             latD -= 100;
             ClientModel.Lat = latD;
             ClientModel.point.Lat = latD.ToString();
-            */
+            
             return sb.ToString();
         }
-
+        */
 
         [HttpPost]
         public string SaveToXML()
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".txt";
-            if (!System.IO.File.Exists(filename))
-            {
-/*                var lon = ClientModel.Instance.Lon;
-                var lat = ClientModel.Instance.Lat;
-                Point p = new Point();
-                p.Lat = lat.ToString();
-                p.Lon = lon.ToString();*/
-                XmlWriterSettings settings = new XmlWriterSettings();
-                XmlWriter writer = XmlWriter.Create(filename, settings);
-                XElement xmlTree = new XElement("Location",
-                    new XElement("Lon", ClientModel.Instance.Lon),
-                    new XElement("Lat", ClientModel.Instance.Lat)
-                );
-                xmlTree.WriteTo(writer);
-                writer.Flush();
-                writer.Close();
-                return writer.ToString(); ;
-            }
-            else
-            {
-                XDocument xDocument = XDocument.Load(filename);
-                XElement root = xDocument.Element("Location");
-
-                IEnumerable<XElement> rows = root.Descendants();
-                XElement lastRow = rows.Last();
-                root.AddAfterSelf(
-                   new XElement("Lon", ClientModel.Instance.Lon),
-                   new XElement("Lat", ClientModel.Instance.Lat));
-                xDocument.Save(filename);
-                return xDocument.ToString();
-            }
-            //writer = p.ToXml(writer);
-            //string data = p.Lon + "," + p.Lat; 
-            //ClientModel.Instance.SaveToFile(data);
-            //return writer.ToString();
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
+            return DBHandler.Instance.SaveData(filename);
         }
 
     }

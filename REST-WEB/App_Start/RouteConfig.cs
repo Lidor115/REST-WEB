@@ -28,7 +28,13 @@ namespace REST_WEB
             routes.MapRoute(
                 name: "save",
                 url: "save/{ip}/{port}/{second}/{time}/{name}",
-                defaults: new { controller = "My", action = "save"}
+                defaults: new { controller = "My", action = "save" }
+            );
+
+            routes.MapRoute(
+                name: "displaySaved",
+                url: "display/{name}/{interval}",
+                defaults: new { controller = "My", action = "displaySaved" }
             );
 
             routes.MapRoute(
