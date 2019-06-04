@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Xml;
 using REST_WEB.Models;
 namespace REST_WEB.Controllers
 {
@@ -10,8 +11,9 @@ namespace REST_WEB.Controllers
     {
         private ClientModel ClientModel = ClientModel.Instance;
         [HttpGet]
-        public ActionResult display(string ip, int port, int time)
+        public ActionResult display(string ip1, string ip2, string ip3, string ip4, int port, int time)
         {
+            string ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
             ClientModel.Open(ip, port);
             if (ClientModel.IsConnected())
             {
@@ -31,6 +33,7 @@ namespace REST_WEB.Controllers
             return View();
         }
 
+
         [HttpPost]
         public string DisplayFile(string name, int interval)
         {
@@ -44,7 +47,9 @@ namespace REST_WEB.Controllers
             return View();
         }
 
-        /*
+
+
+
         [HttpPost]
         public string GetLonLat()
         {
@@ -54,6 +59,7 @@ namespace REST_WEB.Controllers
             ClientModel.point.Lat = lat;
             return ToXml(ClientModel.point);
         }
+
         public string ToXml(Point point)
         {
             //Initiate XML stuff
@@ -69,7 +75,9 @@ namespace REST_WEB.Controllers
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
-            /*
+            return sb.ToString();
+        }
+        /*
             double lonD = double.Parse(ClientModel.point.Lon);
             lonD += 100;
             ClientModel.point.Lon = lonD.ToString();
@@ -79,15 +87,21 @@ namespace REST_WEB.Controllers
             ClientModel.Lat = latD;
             ClientModel.point.Lat = latD.ToString();
             
-            return sb.ToString();
         }
         */
 
         [HttpPost]
         public string SaveToXML()
         {
+            string lon = ClientModel.Lon.ToString();
+            string lat = ClientModel.Lat.ToString();
+            ClientModel.point.Lon = lon;
+            ClientModel.point.Lat = lat;
+            ToXml(ClientModel.point);
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
-            return DBHandler.Instance.SaveData(filename);
+            DBHandler.Instance.SaveData(filename);
+            return ToXml(ClientModel.point);
+
         }
 
     }

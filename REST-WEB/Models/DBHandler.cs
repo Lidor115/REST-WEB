@@ -57,7 +57,7 @@ namespace REST_WEB.Models
 
                 IEnumerable<XElement> rows = root.Descendants();
                 XElement lastRow = rows.Last();
-                root.AddAfterSelf(
+                lastRow.AddAfterSelf(
                    new XElement("Lon", ClientModel.Instance.Lon),
                    new XElement("Lat", ClientModel.Instance.Lat));
                 dataTree.Save(filename);

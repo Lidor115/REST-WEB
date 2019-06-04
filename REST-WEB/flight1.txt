@@ -1,1 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Location Count="1"><Lon>-157.9431852</Lon><Lat>21.32524669</Lat></Location>

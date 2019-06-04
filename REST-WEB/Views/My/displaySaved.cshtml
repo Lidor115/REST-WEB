@@ -1,7 +1,7 @@
 ﻿@model REST_WEB.Models.ClientModel
 
 @{
-    ViewBag.Title = "displaySaved";
+    ViewBag.Title = "DisplayFile";
 }
 
 <!DOCTYPE html>
@@ -22,7 +22,8 @@
     canvas.style.position = "absolute";
     var ctx = canvas.getContext("2d");
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+        ctx.canvas.height = window.innerHeight;
+
 
     var prevLon = null;
     var prevLat = null;
@@ -46,14 +47,12 @@
         ctx.lineTo(lonNormal, latNormal);
         ctx.strokeStyle = "#FF0000";
         ctx.stroke();
-        //alert("prev Lon1: " + prevLon + " Lon: " + lonNormal);
-       // alert("prev Lat1: " + prevLat + " Lat: " + latNormal);
     }
 
 
         function drawTimer() {
-                    var lon = -157;
-                    var lat = 21;
+                   // var lon = -157;
+                    //var lat = 21;
 
             var interval =@Session["interval"];
             var IntervalTime = t * 1000;
@@ -64,8 +63,8 @@
                     $xml = $(xmlDoc);
                     lon = $xml.find("Lon").text();
                     lat = $xml.find("Lat").text();
-                    alert(" Lon: " + lon);
-                    alert(" Lat: " + lat);
+                    //alert(" Lon: " + lon);
+                   // alert(" Lat: " + lat);
                     var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                     var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
                             alert(" Lon Normal: " + lonNormal);
@@ -85,9 +84,7 @@
                 });
 
             });
-            if (IntervalTime != 0) {
-                setInterval(myTimer, IntervalTime);
-            }
+            setInterval(myTimer, IntervalTime);
             myTimer();
         }
 

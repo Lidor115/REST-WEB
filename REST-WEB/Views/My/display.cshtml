@@ -50,8 +50,8 @@
 
 
         function drawTimer() {
-                    var lon = -157;
-                    var lat = 21; 
+             //       var lon = -157;
+              //      var lat = 21; 
 
             var t =@Session["time"]; 
             var IntervalTime = t * 1000;
@@ -60,10 +60,10 @@
                 $.post("@Url.Action("GetLonLat")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml);
                     $xml = $(xmlDoc);
-                    //lon = $xml.find("Lon").text();
-                    //lat = $xml.find("Lat").text();
-                    lon = lon + 10;
-                    lat = lat - 10;
+                    lon = $xml.find("Lon").text();
+                    lat = $xml.find("Lat").text();
+                   // lon = lon + 10;
+                  //  lat = lat - 10;
                     var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                     var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
                            // alert(" Lon Normal: " + lonNormal);

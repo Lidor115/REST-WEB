@@ -60,7 +60,7 @@ namespace REST_WEB.Models
         //Read file
         public void ReadFile(string name)
         {
-            string fileName = name + ".txt";
+            string fileName = name + ".xml";
             string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             List<List<float>> temp = new List<List<float>>();
             for (int i = 0; i < lines.Length; i++)
@@ -97,11 +97,11 @@ namespace REST_WEB.Models
         {
             set
             {
-                this.Name = value;
+                this.name = value;
             }
             get
             {
-                return this.Name;
+                return this.name;
             }
         }
 
