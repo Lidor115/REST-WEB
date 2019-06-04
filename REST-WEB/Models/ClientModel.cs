@@ -50,7 +50,7 @@ namespace REST_WEB.Models
         //Save route to file
         public void SaveToFile(string data)
         {
-            string fileName = this.name + ".txt";
+            string fileName = this.name + ".xml";
             StreamWriter writer = File.AppendText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             writer.WriteLine(data);
            
@@ -60,7 +60,7 @@ namespace REST_WEB.Models
         //Read file
         public void ReadFile(string name)
         {
-            string fileName = name + ".txt";
+            string fileName = name + ".xml";
             string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             List<List<float>> temp = new List<List<float>>();
             for (int i = 0; i < lines.Length; i++)

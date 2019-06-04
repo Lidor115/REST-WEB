@@ -97,7 +97,7 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string SaveToXML()
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".txt";
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             if (!System.IO.File.Exists(filename))
             {
 /*                var lon = ClientModel.Instance.Lon;
@@ -123,7 +123,7 @@ namespace REST_WEB.Controllers
 
                 IEnumerable<XElement> rows = root.Descendants();
                 XElement lastRow = rows.Last();
-                root.AddAfterSelf(
+                lastRow.AddAfterSelf(
                    new XElement("Lon", ClientModel.Instance.Lon),
                    new XElement("Lat", ClientModel.Instance.Lat));
                 xDocument.Save(filename);
