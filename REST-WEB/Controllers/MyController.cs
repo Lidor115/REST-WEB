@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
-using System.Xml.Linq;
 using REST_WEB.Models;
 namespace REST_WEB.Controllers
 {
@@ -12,8 +11,9 @@ namespace REST_WEB.Controllers
     {
         private ClientModel ClientModel = ClientModel.Instance;
         [HttpGet]
-        public ActionResult display(string ip, int port, int time)
+        public ActionResult display(string ip1, string ip2, string ip3, string ip4, int port, int time)
         {
+            string ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
             ClientModel.Open(ip, port);
             if (ClientModel.IsConnected())
             {
@@ -33,17 +33,21 @@ namespace REST_WEB.Controllers
             return View();
         }
 
-        public ActionResult DisplayFile(string name, int time)
+
+        [HttpPost]
+        public string DisplayFile(string name, int interval)
         {
-            Session["time"] = time;
-            ClientModel.ReadFile(name);
-            return View();
+            Session["interval"] = interval;
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + name + ".xml";
+            return DBHandler.Instance.ReadData(filename);
 
         }
         public ActionResult Def()
         {
             return View();
         }
+
+
 
 
         [HttpPost]
@@ -53,18 +57,9 @@ namespace REST_WEB.Controllers
             string lat = ClientModel.Lat.ToString();
             ClientModel.point.Lon = lon;
             ClientModel.point.Lat = lat;
-            /*
-            double lonD = double.Parse(ClientModel.point.Lon);
-            lonD += 100;
-            ClientModel.point.Lon = lonD.ToString();
-            ClientModel.Lon = lonD;
-            double latD = double.Parse(ClientModel.point.Lat);
-            latD -= 100;
-            ClientModel.Lat = latD;
-            ClientModel.point.Lat = latD.ToString();
-*/
             return ToXml(ClientModel.point);
         }
+
         public string ToXml(Point point)
         {
             //Initiate XML stuff
@@ -80,7 +75,9 @@ namespace REST_WEB.Controllers
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
-            /*
+            return sb.ToString();
+        }
+        /*
             double lonD = double.Parse(ClientModel.point.Lon);
             lonD += 100;
             ClientModel.point.Lon = lonD.ToString();
@@ -89,14 +86,14 @@ namespace REST_WEB.Controllers
             latD -= 100;
             ClientModel.Lat = latD;
             ClientModel.point.Lat = latD.ToString();
-            */
-            return sb.ToString();
+            
         }
-
+        */
 
         [HttpPost]
         public string SaveToXML()
         {
+<<<<<<< HEAD
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             if (!System.IO.File.Exists(filename))
             {
@@ -133,6 +130,17 @@ namespace REST_WEB.Controllers
             //string data = p.Lon + "," + p.Lat; 
             //ClientModel.Instance.SaveToFile(data);
             //return writer.ToString();
+=======
+            string lon = ClientModel.Lon.ToString();
+            string lat = ClientModel.Lat.ToString();
+            ClientModel.point.Lon = lon;
+            ClientModel.point.Lat = lat;
+            ToXml(ClientModel.point);
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
+            DBHandler.Instance.SaveData(filename);
+            return ToXml(ClientModel.point);
+
+>>>>>>> lidor
         }
 
     }

@@ -17,8 +17,8 @@ namespace REST_WEB.Models
         private BinaryReader binaryReader;
         private bool connected = false;
         List<List<float>> myList;
-            private string name; 
-        public ClientModel() {
+        private string name; 
+        private ClientModel() {
             point = new Point();
         }
 
@@ -51,6 +51,7 @@ namespace REST_WEB.Models
         public void SaveToFile(string data)
         {
             string fileName = this.name + ".xml";
+
             StreamWriter writer = File.AppendText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             writer.WriteLine(data);
            
