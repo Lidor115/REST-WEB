@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -40,15 +40,6 @@ namespace REST_WEB.Models
                 ));
                 dataTree.Save(filename);
                 return dataTree.ToString();
-               /* XmlWriterSettings settings = new XmlWriterSettings();
-                XmlWriter writer = XmlWriter.Create(filename, settings);
-                XElement xmlTree = new XElement("Location",
-                    new XElement("Lon", ClientModel.Instance.Lon),
-                    new XElement("Lat", ClientModel.Instance.Lat)
-                );
-                xmlTree.WriteTo(writer);
-                writer.Flush();
-                writer.Close();*/
             }
             else
             {
@@ -69,7 +60,11 @@ namespace REST_WEB.Models
         {
             if (!File.Exists(filename))
                 throw new FileNotFoundException("This file was not found.");
-            return XDocument.Load(filename).ToString();
+            XDocument doc = XDocument.Load(filename);
+            StringBuilder sb = new StringBuilder();
+            XmlWriter writer = XmlWriter.Create(sb);
+            doc.WriteTo(writer);
+            return sb.ToString();
         }
     }
 }

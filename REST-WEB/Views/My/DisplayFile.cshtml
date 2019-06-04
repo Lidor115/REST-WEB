@@ -1,5 +1,4 @@
-﻿@model REST_WEB.Models.ClientModel
-
+﻿
 @{
     ViewBag.Title = "DisplayFile";
 }
@@ -51,24 +50,22 @@
 
 
         function drawTimer() {
-                   // var lon = -157;
-                    //var lat = 21;
 
             var interval =@Session["interval"];
             var IntervalTime = t * 1000;
             alert(IntervalTime);
             myTimer = (function () {
-                $.post("@Url.Action("DisplayFile")").done(function (xml) {
+                $.post("@Url.Action("DisplayFileToView")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml);
                     $xml = $(xmlDoc);
                     lon = $xml.find("Lon").text();
                     lat = $xml.find("Lat").text();
-                    //alert(" Lon: " + lon);
-                   // alert(" Lat: " + lat);
+                    alert(" Lon: " + lon);
+                    alert(" Lat: " + lat);
                     var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                     var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
-                            alert(" Lon Normal: " + lonNormal);
-                            alert(" Lat Normal: " + latNormal);
+                    alert(" Lon Normal: " + lonNormal);
+                    alert(" Lat Normal: " + latNormal);
 
                     if (prevLat == null || prevLon == null) {
                         drawPoint(lonNormal, latNormal);
@@ -84,13 +81,12 @@
                 });
 
             });
-            setInterval(myTimer, IntervalTime);
-            myTimer();
+            if (IntervalTime != 0) {
+                setInterval(myTimer, IntervalTime);
+                myTimer();
+            }
         }
-
         drawTimer();
-
-
     </script>
     </>
 </body>
