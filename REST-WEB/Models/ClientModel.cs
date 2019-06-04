@@ -50,7 +50,8 @@ namespace REST_WEB.Models
         //Save route to file
         public void SaveToFile(string data)
         {
-            string fileName = this.Name + ".txt";
+            string fileName = this.name + ".xml";
+
             StreamWriter writer = File.AppendText(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             writer.WriteLine(data);
            

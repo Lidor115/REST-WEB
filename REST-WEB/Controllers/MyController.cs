@@ -17,7 +17,7 @@ namespace REST_WEB.Controllers
             string ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
             ClientModel.Open(ip, port);
             if (ClientModel.IsConnected())
-            Session["time"] = time; 
+                Session["time"] = time; 
             return View();
         }
 
@@ -26,7 +26,7 @@ namespace REST_WEB.Controllers
         public ActionResult save(string ip, int port, int second, int time, string name)
         {
             ClientModel.Open(ip, port);
-            ClientModel.Name = name; 
+            ClientModel.Name = name;
             Session["time"] = second;
             Session["timoutSave"] = time;
             return View();
