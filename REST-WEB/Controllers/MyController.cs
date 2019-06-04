@@ -17,7 +17,7 @@ namespace REST_WEB.Controllers
             ClientModel.Open(ip, port);
             if (ClientModel.IsConnected())
             {
-                Session["time"] = time; 
+                Session["time"] = time;
             }
             return View();
         }
@@ -27,7 +27,7 @@ namespace REST_WEB.Controllers
         public ActionResult save(string ip, int port, int second, int time, string name)
         {
             ClientModel.Open(ip, port);
-            ClientModel.Name = name; 
+            ClientModel.Name = name;
             Session["time"] = second;
             Session["timoutSave"] = time;
             return View();
@@ -93,44 +93,6 @@ namespace REST_WEB.Controllers
         [HttpPost]
         public string SaveToXML()
         {
-<<<<<<< HEAD
-            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
-            if (!System.IO.File.Exists(filename))
-            {
-/*                var lon = ClientModel.Instance.Lon;
-                var lat = ClientModel.Instance.Lat;
-                Point p = new Point();
-                p.Lat = lat.ToString();
-                p.Lon = lon.ToString();*/
-                XmlWriterSettings settings = new XmlWriterSettings();
-                XmlWriter writer = XmlWriter.Create(filename, settings);
-                XElement xmlTree = new XElement("Location",
-                    new XElement("Lon", ClientModel.Instance.Lon),
-                    new XElement("Lat", ClientModel.Instance.Lat)
-                );
-                xmlTree.WriteTo(writer);
-                writer.Flush();
-                writer.Close();
-                return writer.ToString(); ;
-            }
-            else
-            {
-                XDocument xDocument = XDocument.Load(filename);
-                XElement root = xDocument.Element("Location");
-
-                IEnumerable<XElement> rows = root.Descendants();
-                XElement lastRow = rows.Last();
-                lastRow.AddAfterSelf(
-                   new XElement("Lon", ClientModel.Instance.Lon),
-                   new XElement("Lat", ClientModel.Instance.Lat));
-                xDocument.Save(filename);
-                return xDocument.ToString();
-            }
-            //writer = p.ToXml(writer);
-            //string data = p.Lon + "," + p.Lat; 
-            //ClientModel.Instance.SaveToFile(data);
-            //return writer.ToString();
-=======
             string lon = ClientModel.Lon.ToString();
             string lat = ClientModel.Lat.ToString();
             ClientModel.point.Lon = lon;
@@ -140,7 +102,6 @@ namespace REST_WEB.Controllers
             DBHandler.Instance.SaveData(filename);
             return ToXml(ClientModel.point);
 
->>>>>>> lidor
         }
 
     }
