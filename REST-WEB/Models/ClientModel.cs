@@ -212,7 +212,7 @@ namespace REST_WEB.Models
             {
                 return this.Azimuth;
             }
-            private set { }
+            private set {; }
         }
         /**
          * Is the connection open

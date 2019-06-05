@@ -55,7 +55,6 @@
 
             var t =@Session["time"]; 
             var IntervalTime = t * 1000;
-            alert(IntervalTime);
             myTimer = (function () {
                 $.post("@Url.Action("GetLonLat")").done(function (xml) {
                     var xmlDoc = $.parseXML(xml);
@@ -66,8 +65,8 @@
                   //  lat = lat - 10;
                     var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                     var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
-                           // alert(" Lon Normal: " + lonNormal);
-                            //alert(" Lat Normal: " + latNormal);
+                         //   alert(" Lon Normal: " + lonNormal);
+                        //alert(" Lat Normal: " + latNormal);
 
                     if (prevLat == null || prevLon == null) {
                         drawPoint(lonNormal, latNormal);

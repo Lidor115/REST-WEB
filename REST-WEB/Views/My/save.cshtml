@@ -25,8 +25,6 @@
     var prevLat = null;
     var lon = null; 
     var lat = null;
-    var rudder = null;
-    var throttle = null;
 
 
     function drawPoint (lonNormal, latNormal) {
@@ -55,17 +53,17 @@
         //var lon = -157;
         //var lat = 21;
 
-        var t =@Session["time"];
+        var t = @Session["time"];
         var IntervalTime = t * 1000;
-       // alert(IntervalTime);
+        alert(IntervalTime);
         myTimer = (function () {
             $.post("@Url.Action("SaveToXML")").done(function (xml) {
                 var xmlDoc = $.parseXML(xml);
                 $xml = $(xmlDoc);
                 lon = $xml.find("Lon").text();
                 lat = $xml.find("Lat").text();
-               // alert(lon);
-              //  alert(lat);
+                //alert(lon);
+                //alert(lat);
               //  lon = lon + 5;
               //  lat = lat - 5;
                 var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
@@ -91,7 +89,8 @@
         myTimer();
     }
 
-    drawTimer();
+        drawTimer();
+
 
 
     </script>

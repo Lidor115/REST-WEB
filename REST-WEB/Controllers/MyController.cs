@@ -9,6 +9,8 @@ namespace REST_WEB.Controllers
     {
         private ClientModel ClientModel = ClientModel.Instance;
         private string askedName = null;
+
+
         /**
          * Display - get the ip with 4 params to be different from Display after the save.
          */
@@ -71,8 +73,8 @@ namespace REST_WEB.Controllers
         {
             string lon = ClientModel.Lon.ToString();
             string lat = ClientModel.Lat.ToString();
-            ClientModel.Lon = double.Parse(lon);
-            ClientModel.Lat = double.Parse(lat);
+            //ClientModel.Location.Lon = lon;
+           //ClientModel.Location.Lat = lat;
             return ToXml(ClientModel.Location);
         }
 
@@ -88,7 +90,7 @@ namespace REST_WEB.Controllers
             XmlWriter writer = XmlWriter.Create(sb, settings);
 
             writer.WriteStartDocument();
-            writer.WriteStartElement("Azimuth");
+            writer.WriteStartElement("Location");
             loc.ToXml(writer);
             writer.WriteElementString("Lon", loc.Lon);
             writer.WriteElementString("Lat", loc.Lat);
@@ -111,16 +113,18 @@ namespace REST_WEB.Controllers
             string lat = ClientModel.Lat.ToString();
             string rudder = ClientModel.Rudder.ToString();
             string throttle = ClientModel.Throttle.ToString();
+            Location l = new Location();
+            l.Lon = lon;
+            l.Lat = lat; 
             // make  a point
-            ClientModel.Lon = double.Parse(lon);
-            ClientModel.Lat = double.Parse(lat);
-            ClientModel.Rudder = double.Parse(rudder);
-            ClientModel.Throttle = double.Parse(throttle);
+           // ClientModel.Location.Lon = lon;
+            //ClientModel.Location.Lat = lat;
+           // ClientModel.Location.Rudder = rudder;
+           // ClientModel.Location.Throttle = throttle;
             // send the point function "ToXml"
-            ToXml(ClientModel.Location);
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             DBHandler.Instance.SaveData(filename);
-            return ToXml(ClientModel.Location);
+            return ToXml(l);
         }
 
     }

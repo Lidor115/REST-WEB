@@ -1,0 +1,230 @@
+commit deee1a48dbb33fe253340e8abae22c6e4f1ff6f9
+Author: lidor115 <lidor115@gmail.com>
+Date:   Wed Jun 5 13:00:54 2019 +0300
+
+    coding style
+
+commit 2ca10f0265b660e352ce3896661fcf28e05a6061
+Author: lidor115 <lidor115@gmail.com>
+Date:   Wed Jun 5 12:36:39 2019 +0300
+
+    test
+
+commit f619d1dfeb05ba5861935229026acfe93843baa1
+Author: Evyatar <evya123@gmail.com>
+Date:   Wed Jun 5 00:33:25 2019 -0700
+
+    Almost  done'
+
+commit e386aff9359a85ba2a4b486607fe8bdcbf4bd3bc
+Merge: e4b4dfe c25b5fc
+Author: Evyatar <evya123@gmail.com>
+Date:   Tue Jun 4 11:17:09 2019 -0700
+
+    merge
+
+commit e4b4dfe26cd51f52ba0ceb4764fca3c3908230d3
+Author: Evyatar <evya123@gmail.com>
+Date:   Tue Jun 4 11:10:28 2019 -0700
+
+    Added file logic
+
+commit c25b5fc0ac1fc56c92ab7f70f45eab97afd7b77f
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue Jun 4 17:18:39 2019 +0300
+
+    test
+
+commit 6829b33c52ff6deb133b2e269542af5e68566d4f
+Merge: 75af28f 7e402da
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue Jun 4 17:04:36 2019 +0300
+
+    nothing
+
+commit 7e402da22a36fb2eeef3c26ab265bc40d26aeb72
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue Jun 4 17:00:14 2019 +0300
+
+    tests
+
+commit 75af28f46797907564f81bb35e9ee622896360a8
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue Jun 4 13:54:32 2019 +0300
+
+    nothing
+
+commit 190d738cfa961725c15c799eecc8b773c36208f6
+Author: Evyatar <evya123@gmail.com>
+Date:   Mon Jun 3 09:58:30 2019 -0700
+
+    Added display saved file
+
+commit 07deecbc3e0fd97ff98c1128d1c547bd55b035ba
+Author: Evyatar <evya123@gmail.com>
+Date:   Sun Jun 2 13:09:59 2019 -0700
+
+    Changed save
+
+commit 27a2289c06c4557f5580fc56ed8a639047a44cc2
+Merge: 2b2e543 99f2c80
+Author: Evyatar <evya123@gmail.com>
+Date:   Sun Jun 2 12:59:07 2019 -0700
+
+    Merge branch 'master' of https://github.com/Lidor115/REST-WEB
+
+commit 2b2e543e4eb9b0de67f8933db7b55b614d809e88
+Author: Evyatar <evya123@gmail.com>
+Date:   Sun Jun 2 12:59:01 2019 -0700
+
+    Fixed SaveToXML
+
+commit 99f2c8039e8be67e18ab818918f3cb964e104b4a
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sun Jun 2 22:53:58 2019 +0300
+
+    changes in save
+
+commit 18c49f4a26cffc1a2b905facaea5ef1c8a9789c4
+Author: Evyatar <evya123@gmail.com>
+Date:   Sun Jun 2 12:32:19 2019 -0700
+
+    Added save logic
+
+commit 07a83a4519a5e500ebcf2f69e8bf1b86c908a06d
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sun Jun 2 20:54:27 2019 +0300
+
+    save
+
+commit 3c074de95afb1f86ca2ac31ffed0691c3e85332b
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sun Jun 2 17:37:00 2019 +0300
+
+    finish ass 2
+
+commit edf52e31ecdc04e8643a1318c849bb7aec700549
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sat Jun 1 23:32:31 2019 +0300
+
+    ass1 + ass2 works!
+
+commit b38c81ae4b45de5cf3679fdc1cc5cb6adfc0f20c
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sat Jun 1 21:57:13 2019 +0300
+
+    changes in model - adding point
+
+commit 03add3716e5963badee27169a7b4cdabd6f60eff
+Author: lidor115 <lidor115@gmail.com>
+Date:   Sat Jun 1 19:18:11 2019 +0300
+
+    script, model and controller of ass2
+
+commit ca4a8f082ec49487779fbf958b212f30525531ef
+Author: Evyatar <evya123@gmail.com>
+Date:   Sat Jun 1 02:39:25 2019 -0700
+
+    Added logic
+
+commit b5e7dddafe379abb964c908f1893aaf07bfa9d30
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 10:39:27 2019 -0700
+
+    Minor changes
+
+commit 1e816a79587fc818cf8223e0f680b6bfceed92ed
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 10:37:18 2019 -0700
+
+    Added functions as HTTP GET
+
+commit de7c2863ebed225b7b2ef117a149cb6bdee40bda
+Author: lidor115 <lidor115@gmail.com>
+Date:   Thu May 30 17:55:23 2019 +0300
+
+    fix view and finish ass 1
+
+commit 78d1a0a97ae3ccddec2cd8388840b47e33794e07
+Merge: b428080 ece624b
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:47:28 2019 -0700
+
+    Merge branch 'master' of https://github.com/Lidor115/REST-WEB into Evyatar
+
+commit b4280808f7f5a149c9556000cc64708d7c1db283
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:44:23 2019 -0700
+
+    Revert "Revert "Added model""
+    
+    This reverts commit 9803f2f21d8f75b59abef2ebf3d9075d0c5520ca.
+
+commit 9803f2f21d8f75b59abef2ebf3d9075d0c5520ca
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:43:23 2019 -0700
+
+    Revert "Added model"
+    
+    This reverts commit adae7f3c35561a7b71ae717661c719ecc89c0a4f.
+
+commit ece624b7962a5fd7b4b63df210615e59d5d1cd2a
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:40:50 2019 -0700
+
+    Added model
+
+commit 57226a326f6c4e038ac5ee28244d6cc5572a4cc8
+Merge: adae7f3 ec819f6
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:31:57 2019 -0700
+
+    Merge branch 'lidor' of https://github.com/Lidor115/REST-WEB into Evyatar
+
+commit adae7f3c35561a7b71ae717661c719ecc89c0a4f
+Author: Evyatar <evya123@gmail.com>
+Date:   Thu May 30 04:30:08 2019 -0700
+
+    Added model
+
+commit ec819f67a81972af67303be94646fab98ae63f1f
+Author: lidor115 <lidor115@gmail.com>
+Date:   Thu May 30 14:29:01 2019 +0300
+
+    nothing
+
+commit c7a8e49dd3c98530917582ded5684c71bf985c27
+Author: lidor115 <lidor115@gmail.com>
+Date:   Thu May 30 12:58:46 2019 +0300
+
+    controller and view
+
+commit f3126bbcabdbbd75698f7cb33cae702581b23485
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue May 28 23:34:48 2019 +0300
+
+    basic view
+
+commit c82bc7860bb6549cbfd878b75593a50f71689f38
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue May 28 20:40:45 2019 +0300
+
+    fake controller
+
+commit 54cafc7d1f1bab767f55bf408151a1159c00173b
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue May 28 19:43:40 2019 +0300
+
+    first commit
+
+commit c1c1ecfaea4f23455e8531212141e8493c62a8f8
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue May 28 19:36:05 2019 +0300
+
+    Add project files.
+
+commit 22d96a5c7e3fda1157ef465c359445d40fb61814
+Author: lidor115 <lidor115@gmail.com>
+Date:   Tue May 28 19:36:03 2019 +0300
+
+    Add .gitignore and .gitattributes.

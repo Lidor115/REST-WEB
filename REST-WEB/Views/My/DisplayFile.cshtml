@@ -53,10 +53,10 @@
 
     function drawTimer() {
 
-        var interval =@Session["interval"];
+        var interval = @Session["interval"];
         var IntervalTime = interval * 1000;
         myTimer = (function () {
-            $.post("@Url.Action("DisplayFileToView")").done(function (xml) {
+            $.post('@Url.Action("DisplayFileToView")').done(function (xml) {
                 var xmlDoc = $.parseXML(xml);
                 $xml = $(xmlDoc);
                 if ($xml.find("stop").text() == "stop") {
@@ -87,7 +87,7 @@
         myTimer();
     }
         drawTimer();
-        setTimeout(function () { alert("Done"); }, $(4 * IntervalTime));
+        setTimeout(function () { alert("Done"); }, $(IntervalTime));
 
     </script>
     </>

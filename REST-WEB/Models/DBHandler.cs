@@ -14,7 +14,6 @@ namespace REST_WEB.Models
         private int idx = 0;
 
         private DBHandler() { }
-        ~DBHandler() { cleanDB(); }
         /**
          * Get a singleton instance of the DBHandler
          */
