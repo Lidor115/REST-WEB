@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace REST_WEB.Models
@@ -74,7 +76,17 @@ namespace REST_WEB.Models
             XDocument root = XDocument.Load(filename);
             IEnumerable<XElement> dec = root.Element("Location").Descendants();
             if (idx >= dec.Count())
-                return "stop";
+            {
+                StringBuilder sb = new StringBuilder();
+                XmlWriterSettings settings = new XmlWriterSettings();
+                XmlWriter writer = XmlWriter.Create(sb, settings);
+                writer.WriteStartDocument();
+                writer.WriteElementString("stop", "no");
+                writer.WriteEndDocument();
+                writer.Flush();
+                return sb.ToString();
+                }
+            
             XDocument ret = new XDocument(new XElement("Location",
                     dec.ElementAt(idx++),
                     dec.ElementAt(idx++)

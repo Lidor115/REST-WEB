@@ -59,10 +59,11 @@
             $.post('@Url.Action("DisplayFileToView")').done(function (xml) {
                 var xmlDoc = $.parseXML(xml);
                 $xml = $(xmlDoc);
-                if ($xml.find("stop").text() == "stop") {
-                    alert("END!");
-                    stopInterval();
-                }
+                check = $xml.find("stop").text();
+                if (check == "no") {
+                    alert("done!");
+                    stopInterval(inter);
+               }
                 
                 lon = $xml.find("Lon").text();
                 lat = $xml.find("Lat").text();
@@ -83,7 +84,7 @@
             });
 
         });
-        setInterval(myTimer, IntervalTime);
+        var inter = setInterval(myTimer, IntervalTime);
         myTimer();
     }
         drawTimer();
