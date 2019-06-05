@@ -8,7 +8,7 @@ namespace REST_WEB.Models
 {
     public class ClientModel
     {
-        public Point point { get; private set; }
+        private Location Azimuth { get; set; }
         private readonly static object locker = new object();
         private NetworkStream stream = null;
         private TcpClient client;
@@ -22,7 +22,7 @@ namespace REST_WEB.Models
          * constructor - make a new point
          */
         private ClientModel() {
-            point = new Point();
+            Azimuth = new Location();
         }
 
         /**
@@ -159,7 +159,7 @@ namespace REST_WEB.Models
             get
             {
                 double l = GetInfo("get /position/longitude-deg\r\n");
-                this.point.Lat = l.ToString();
+                this.Azimuth.Lon = l.ToString();
                 return l;
             }
             set {; }
@@ -173,7 +173,7 @@ namespace REST_WEB.Models
             get
             {
                 double l = GetInfo("get /position/latitude-deg\r\n");
-                this.point.Lat = l.ToString();
+                this.Azimuth.Lat = l.ToString();
                 return l;
 
 
@@ -182,6 +182,30 @@ namespace REST_WEB.Models
 
         }
 
+        public double Rudder
+        {
+            get
+            {
+                double r = GetInfo("get /controls/flight/rudder\r\n");
+                this.Azimuth.Rudder = r.ToString();
+                return r;
+            }
+            set {; }
+        }
+
+        public double Throttle
+        {
+            get
+            {
+                double t = GetInfo("get /controls/engines/current-engine/throttle\r\n");
+                this.Azimuth.Lat = t.ToString();
+                return t;
+
+
+            }
+            set {; }
+
+        }
 
         /**
          * Is the connection open

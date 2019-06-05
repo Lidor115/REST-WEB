@@ -73,16 +73,16 @@ namespace REST_WEB.Controllers
         {
             string lon = ClientModel.Lon.ToString();
             string lat = ClientModel.Lat.ToString();
-            ClientModel.point.Lon = lon;
-            ClientModel.point.Lat = lat;
-            return ToXml(ClientModel.point);
+            ClientModel.Lon = double.Parse(lon);
+            ClientModel.Lat = double.Parse(lat);
+            return ToXml(ClientModel.Azimuth);
         }
 
         /**
         * Get Lon and Lat by point - parse to XML
         */
 
-        public string ToXml(Point point)
+        public string ToXml(Location point)
         {
             //Initiate XML stuff
             StringBuilder sb = new StringBuilder();
@@ -115,10 +115,10 @@ namespace REST_WEB.Controllers
             ClientModel.point.Lon = lon;
             ClientModel.point.Lat = lat;
             // send the point function "ToXml"
-            ToXml(ClientModel.point);
+            ToXml(ClientModel.Azimuth);
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             DBHandler.Instance.SaveData(filename);
-            return ToXml(ClientModel.point);
+            return ToXml(ClientModel.Azimuth);
         }
 
     }

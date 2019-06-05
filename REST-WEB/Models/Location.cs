@@ -6,15 +6,19 @@ namespace REST_WEB.Models
     /**
      * Point class
      */
-    public class Point
+    public class Location
     {
         public string Lon { get; set; }
         public string Lat { get; set; }
+        public string Rudder { get; set; }
+        public string Throttle { get; set; }
         public XmlWriter ToXml(XmlWriter writer)
         {
             writer.WriteStartElement("Point");
             writer.WriteElementString("Lon", this.Lon);
             writer.WriteElementString("Lat", this.Lat);
+            writer.WriteElementString("Rudder", this.Rudder);
+            writer.WriteElementString("Throttle", this.Throttle);
             writer.WriteEndElement();
             return writer;
         }
