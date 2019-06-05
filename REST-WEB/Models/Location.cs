@@ -14,7 +14,7 @@ namespace REST_WEB.Models
         public string Throttle { get; set; }
         public XmlWriter ToXml(XmlWriter writer)
         {
-            writer.WriteStartElement("Point");
+            writer.WriteStartElement("Azimuth");
             writer.WriteElementString("Lon", this.Lon);
             writer.WriteElementString("Lat", this.Lat);
             writer.WriteElementString("Rudder", this.Rudder);

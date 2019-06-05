@@ -60,8 +60,8 @@
                 var xmlDoc = $.parseXML(xml);
                 $xml = $(xmlDoc);
                 if ($xml.find("stop").text() == "stop") {
-                    alert("END!")
-                    stopInterval(des);
+                    alert("END!");
+                    stopInterval();
                 }
                 
                 lon = $xml.find("Lon").text();
@@ -83,11 +83,12 @@
             });
 
         });
-        var des = setInterval(myTimer, IntervalTime);
+        setInterval(myTimer, IntervalTime);
         myTimer();
-        
     }
         drawTimer();
+        setTimeout(function () { alert("Done"); }, $(4 * IntervalTime));
+
     </script>
     </>
 </body>

@@ -206,7 +206,14 @@ namespace REST_WEB.Models
             set {; }
 
         }
-
+        public Location Location
+        {
+            get
+            {
+                return this.Azimuth;
+            }
+            private set { }
+        }
         /**
          * Is the connection open
          * */

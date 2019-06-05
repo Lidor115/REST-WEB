@@ -1,9 +1,8 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace REST_WEB.Models
@@ -15,7 +14,7 @@ namespace REST_WEB.Models
         private int idx = 0;
 
         private DBHandler() { }
-
+        ~DBHandler() { cleanDB(); }
         /**
          * Get a singleton instance of the DBHandler
          */
@@ -42,7 +41,9 @@ namespace REST_WEB.Models
             {
                 XDocument dataTree = new XDocument(new XElement("Location",
                     new XElement("Lon", ClientModel.Instance.Lon),
-                    new XElement("Lat", ClientModel.Instance.Lat)
+                    new XElement("Lat", ClientModel.Instance.Lat),
+                    new XElement("Rudder", ClientModel.Instance.Rudder),
+                    new XElement("Throttle", ClientModel.Instance.Throttle)
                 ));
                 dataTree.Save(filename);
                 return dataTree.ToString();
@@ -56,7 +57,9 @@ namespace REST_WEB.Models
                 XElement lastRow = rows.Last();
                 lastRow.AddAfterSelf(
                    new XElement("Lon", ClientModel.Instance.Lon),
-                   new XElement("Lat", ClientModel.Instance.Lat));
+                   new XElement("Lat", ClientModel.Instance.Lat),
+                    new XElement("Rudder", ClientModel.Instance.Rudder),
+                    new XElement("Throttle", ClientModel.Instance.Throttle));
                 dataTree.Save(filename);
                 return dataTree.ToString();
             }
@@ -77,7 +80,20 @@ namespace REST_WEB.Models
                     dec.ElementAt(idx++),
                     dec.ElementAt(idx++)
                 ));
+            idx += 2;
             return ret.ToString();
+        }
+
+        private void cleanDB()
+        {
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Instance.Name + ".xml";
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+                File.WriteAllText(filename, "");
+            }
+
+
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml;
@@ -75,14 +73,14 @@ namespace REST_WEB.Controllers
             string lat = ClientModel.Lat.ToString();
             ClientModel.Lon = double.Parse(lon);
             ClientModel.Lat = double.Parse(lat);
-            return ToXml(ClientModel.Azimuth);
+            return ToXml(ClientModel.Location);
         }
 
         /**
         * Get Lon and Lat by point - parse to XML
         */
 
-        public string ToXml(Location point)
+        public string ToXml(Location loc)
         {
             //Initiate XML stuff
             StringBuilder sb = new StringBuilder();
@@ -90,10 +88,10 @@ namespace REST_WEB.Controllers
             XmlWriter writer = XmlWriter.Create(sb, settings);
 
             writer.WriteStartDocument();
-            writer.WriteStartElement("Point");
-            point.ToXml(writer);
-            writer.WriteElementString("Lon", point.Lon);
-            writer.WriteElementString("Lat", point.Lat);
+            writer.WriteStartElement("Azimuth");
+            loc.ToXml(writer);
+            writer.WriteElementString("Lon", loc.Lon);
+            writer.WriteElementString("Lat", loc.Lat);
             writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
@@ -111,14 +109,18 @@ namespace REST_WEB.Controllers
             // get the lon and the lat
             string lon = ClientModel.Lon.ToString();
             string lat = ClientModel.Lat.ToString();
+            string rudder = ClientModel.Rudder.ToString();
+            string throttle = ClientModel.Throttle.ToString();
             // make  a point
-            ClientModel.point.Lon = lon;
-            ClientModel.point.Lat = lat;
+            ClientModel.Lon = double.Parse(lon);
+            ClientModel.Lat = double.Parse(lat);
+            ClientModel.Rudder = double.Parse(rudder);
+            ClientModel.Throttle = double.Parse(throttle);
             // send the point function "ToXml"
-            ToXml(ClientModel.Azimuth);
+            ToXml(ClientModel.Location);
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             DBHandler.Instance.SaveData(filename);
-            return ToXml(ClientModel.Azimuth);
+            return ToXml(ClientModel.Location);
         }
 
     }
