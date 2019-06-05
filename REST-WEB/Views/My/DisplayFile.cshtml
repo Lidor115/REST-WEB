@@ -66,11 +66,8 @@
                 
                 lon = $xml.find("Lon").text();
                 lat = $xml.find("Lat").text();
-                alert(" Lon: " + lon);
-                alert(" Lat: " + lat);
                 var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
                 var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
-
 
                 if (prevLat == null || prevLon == null) {
                     drawPoint(lonNormal, latNormal);

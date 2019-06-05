@@ -96,7 +96,6 @@ namespace REST_WEB.Controllers
             string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + ClientModel.Name + ".xml";
             DBHandler.Instance.SaveData(filename);
             return ToXml(ClientModel.point);
-
         }
 
     }
