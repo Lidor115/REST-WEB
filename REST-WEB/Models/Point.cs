@@ -3,6 +3,9 @@ using System.Xml;
 
 namespace REST_WEB.Models
 {
+    /**
+     * Point class
+     */
     public class Point
     {
         public string Lon { get; set; }

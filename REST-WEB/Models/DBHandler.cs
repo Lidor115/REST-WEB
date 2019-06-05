@@ -16,6 +16,9 @@ namespace REST_WEB.Models
 
         private DBHandler() { }
 
+        /**
+         * Get a singleton instance of the DBHandler
+         */
         public static DBHandler Instance
         {
             get
@@ -30,7 +33,9 @@ namespace REST_WEB.Models
                 }
             }
         }
-
+        /**
+         * Save the Data in th the XML
+         */
         public string SaveData(string filename)
         {
             if (!File.Exists(filename))
@@ -57,6 +62,9 @@ namespace REST_WEB.Models
             }
         }
 
+        /**
+         * Read the data from the XML file
+         */
         public string ReadData(string filename)
         {
             if (!File.Exists(filename))

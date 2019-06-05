@@ -18,12 +18,15 @@ namespace REST_WEB.Models
         private bool connected = false;
         List<List<float>> myList;
         private string name; 
+        /**
+         * constructor - make a new point
+         */
         private ClientModel() {
             point = new Point();
         }
 
         /**
-         * The Instance static property for the Singleton getter.
+         *make singleton of the model
          * */
         public static ClientModel Instance
         {
@@ -41,13 +44,17 @@ namespace REST_WEB.Models
         }
         public int time { get; set; }
 
-
+        /**
+         * check if the client is connected
+         */
         private bool isConnected()
         {
             return this.connected;
         }
 
-        //Save route to file
+        /*
+         * save the routh of the plane to the file by Xml
+         */
         public void SaveToFile(string data)
         {
             string fileName = this.name + ".xml";
@@ -57,11 +64,13 @@ namespace REST_WEB.Models
            
             writer.Close();
         }
-
-        //Read file
+        /**
+         * read the file from the xml
+         */
         public void ReadFile(string name)
         {
             string fileName = name + ".xml";
+            // get the full path of the file
             string[] lines = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + @"\" + fileName);
             List<List<float>> temp = new List<List<float>>();
             for (int i = 0; i < lines.Length; i++)
@@ -141,6 +150,10 @@ namespace REST_WEB.Models
             return Convert.ToDouble(words[1]);
         }
 
+        /**
+         * Lon property  - get from the Plane
+         */
+
         public double Lon
         {
             get
@@ -152,6 +165,9 @@ namespace REST_WEB.Models
             set {; }
         }
 
+        /**
+         * Lat property  - get from the Plane
+         */
         public double Lat
         {
             get
