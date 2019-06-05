@@ -21,7 +21,7 @@
     canvas.style.position = "absolute";
     var ctx = canvas.getContext("2d");
     ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
+    ctx.canvas.height = window.innerHeight;
 
 
     var prevLon = null;
@@ -38,7 +38,9 @@
 
     }
 
-
+        function stopInterval(interval) {
+            clearInterval(interval);
+        }
     function drawLine (prevLon, prevLat, lonNormal,  latNormal) {
         ctx.beginPath();
         ctx.fillStyle = "#FF0000";
@@ -49,43 +51,45 @@
     }
 
 
-        function drawTimer() {
+    function drawTimer() {
 
-            var interval =@Session["interval"];
-            var IntervalTime = t * 1000;
-            alert(IntervalTime);
-            myTimer = (function () {
-                $.post("@Url.Action("DisplayFileToView")").done(function (xml) {
-                    var xmlDoc = $.parseXML(xml);
-                    $xml = $(xmlDoc);
-                    lon = $xml.find("Lon").text();
-                    lat = $xml.find("Lat").text();
-                    alert(" Lon: " + lon);
-                    alert(" Lat: " + lat);
-                    var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
-                    var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
-                    alert(" Lon Normal: " + lonNormal);
-                    alert(" Lat Normal: " + latNormal);
+        var interval =@Session["interval"];
+        var IntervalTime = interval * 1000;
+        myTimer = (function () {
+            $.post("@Url.Action("DisplayFileToView")").done(function (xml) {
+                var xmlDoc = $.parseXML(xml);
+                $xml = $(xmlDoc);
+                if ($xml.find("stop").text() == "stop") {
+                    alert("END!")
+                    stopInterval(des);
+                }
+                
+                lon = $xml.find("Lon").text();
+                lat = $xml.find("Lat").text();
+                alert(" Lon: " + lon);
+                alert(" Lat: " + lat);
+                var lonNormal = (parseFloat(lon) + 180) * (window.innerWidth / 360);
+                var latNormal = (parseFloat(lat) + 90) * (window.innerHeight / 180);
 
-                    if (prevLat == null || prevLon == null) {
-                        drawPoint(lonNormal, latNormal);
-                        prevLon = lonNormal;
-                        prevLat = latNormal;
 
-                    } else {
-                        drawLine(prevLon, prevLat, lonNormal, latNormal);
-                        prevLon = lonNormal;
-                        prevLat = latNormal;
+                if (prevLat == null || prevLon == null) {
+                    drawPoint(lonNormal, latNormal);
+                    prevLon = lonNormal;
+                    prevLat = latNormal;
 
-                    }
-                });
+                } else {
+                    drawLine(prevLon, prevLat, lonNormal, latNormal);
+                    prevLon = lonNormal;
+                    prevLat = latNormal;
 
+                }
             });
-            if (IntervalTime != 0) {
-                setInterval(myTimer, IntervalTime);
-                myTimer();
-            }
-        }
+
+        });
+        var des = setInterval(myTimer, IntervalTime);
+        myTimer();
+        
+    }
         drawTimer();
     </script>
     </>

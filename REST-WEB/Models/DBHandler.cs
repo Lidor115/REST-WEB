@@ -12,6 +12,7 @@ namespace REST_WEB.Models
     {
         private readonly static object locker = new object();
         private static DBHandler self = null;
+        private int idx = 0;
 
         private DBHandler() { }
 
@@ -60,11 +61,15 @@ namespace REST_WEB.Models
         {
             if (!File.Exists(filename))
                 throw new FileNotFoundException("This file was not found.");
-            XDocument doc = XDocument.Load(filename);
-            StringBuilder sb = new StringBuilder();
-            XmlWriter writer = XmlWriter.Create(sb);
-            doc.WriteTo(writer);
-            return sb.ToString();
+            XDocument root = XDocument.Load(filename);
+            IEnumerable<XElement> dec = root.Element("Location").Descendants();
+            if (idx >= dec.Count())
+                return "stop";
+            XDocument ret = new XDocument(new XElement("Location",
+                    dec.ElementAt(idx++),
+                    dec.ElementAt(idx++)
+                ));
+            return ret.ToString();
         }
     }
 }

@@ -42,10 +42,10 @@ namespace REST_WEB.Controllers
             return View();
 
         }
-
+        [HttpPost]
         public string DisplayFileToView()
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + askedName + ".xml";
+            string filename = AppDomain.CurrentDomain.BaseDirectory + @"\" + Session["name"] + ".xml";
             return DBHandler.Instance.ReadData(filename);
         }
         public ActionResult Def()
